@@ -49,27 +49,39 @@ If `current-prefix-arg' is non-nil its value is returned,
 otherwise a number is read form the minibuffer, using any number
 `thing-at-point' could find at `point' as the default."
   (if (numberp current-prefix-arg)
-      current-prefix-arg
-    (read-number "Number: " (thing-at-point 'number))))
+      (list current-prefix-arg nil)
+    (list
+     (read-number "Number: " (thing-at-point 'number))
+     current-prefix-arg)))
 
-(defun numbers-message (msg number)
-  "Show MSG via `message'.
+(defun numbers-reveal (getter number insert)
+  "Use GETTER to find and reveal something about NUMBER.
 
-If nothing could be found for NUMBER (if MSG is nil) show that we
-couldn't find anything."
-  (message "%s" (or msg (format "Unable to get anything for %d." number))))
+If INSERT is non-nil use `insert' to reveal the finding,
+otherwise use `message'."
+  (let ((finding (or (funcall getter number)
+                     (format "Unable to get anything for %d." number))))
+    (if insert
+        (insert finding)
+      (message "%s" finding))))
 
 ;;;###autoload
-(defun numbers-math (number)
-  "Display some maths information about NUMBER."
-  (interactive (list (numbers-reader)))
-  (numbers-message (numbers-get-math number) number))
+(defun numbers-math (number &optional insert)
+  "Display some maths information about NUMBER.
+
+If INSERT is non-nil `insert' the information rather than display
+it."
+  (interactive (numbers-reader))
+  (numbers-reveal #'numbers-get-math number insert))
 
 ;;;###autoload
-(defun numbers-trivia (number)
-  "Display some trivia about NUMBER."
-  (interactive (list (numbers-reader)))
-  (numbers-message (numbers-get-trivia number) number))
+(defun numbers-trivia (number &optional insert)
+  "Display some trivia about NUMBER.
+
+If INSERT is non-nil `insert' the information rather than display
+it."
+  (interactive (numbers-reader))
+  (numbers-reveal #'numbers-get-trivia number insert))
 
 (provide 'numbers)
 
