@@ -48,7 +48,9 @@
 If `current-prefix-arg' is non-nil its value is returned,
 otherwise a number is read form the minibuffer, using any number
 `thing-at-point' could find at `point' as the default."
-  (or current-prefix-arg (read-number "Number: " (thing-at-point 'number))))
+  (if (numberp current-prefix-arg)
+      current-prefix-arg
+    (read-number "Number: " (thing-at-point 'number))))
 
 (defun numbers-message (msg number)
   "Show MSG via `message'.
