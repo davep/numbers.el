@@ -43,11 +43,20 @@
   (numbers-get numbers-trivia-api-url number))
 
 (defun numbers-reader ()
-  "Get a number from the user.
+  "Get a number finding arguments from the user.
 
-If `current-prefix-arg' is non-nil its value is returned,
-otherwise a number is read form the minibuffer, using any number
-`thing-at-point' could find at `point' as the default."
+The return value is a list of the form:
+
+  (number insert)
+
+If `current-prefix-arg' tests as `numberp' the number is taken to
+be its value, and insert will be nil.
+
+If `current-prefix-arg' doesn't test as `numberp' then the user
+will be prompted for a number (using any number `thing-at-point'
+could find at `point' as the default) and number will be what
+they input. insert will then be the value of
+`current-prefix-arg'."
   (if (numberp current-prefix-arg)
       (list current-prefix-arg nil)
     (list
