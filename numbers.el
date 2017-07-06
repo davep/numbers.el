@@ -11,9 +11,9 @@
 ;; numbers.el is a little wrapper around http://numbersapi.com/ that can be
 ;; used to display maths information and trivia about numbers.
 
-(require 'thingatpt)
-
 ;;; Code:
+
+(require 'thingatpt)
 
 (defconst numbers-math-api-url "http://numbersapi.com/%d/math"
   "URL for getting maths information about a number.")
