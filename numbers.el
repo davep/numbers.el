@@ -50,17 +50,24 @@ otherwise a number is read form the minibuffer, using any number
 `thing-at-point' could find at `point' as the default."
   (or current-prefix-arg (read-number "Number: " (thing-at-point 'number))))
 
+(defun numbers-message (msg number)
+  "Show MSG via `message'.
+
+If nothing could be found for NUMBER (if MSG is nil) show that we
+couldn't find anything."
+  (message "%s" (or msg (format "Unable to get anything for %d." number))))
+
 ;;;###autoload
 (defun numbers-math (number)
   "Display some maths information about NUMBER."
   (interactive (list (numbers-reader)))
-  (message "%s" (numbers-get-math number)))
+  (numbers-message (numbers-get-math number) number))
 
 ;;;###autoload
 (defun numbers-trivia (number)
   "Display some trivia about NUMBER."
   (interactive (list (numbers-reader)))
-  (message "%s" (numbers-get-trivia number)))
+  (numbers-message (numbers-get-trivia number) number))
 
 (provide 'numbers)
 
