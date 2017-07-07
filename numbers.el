@@ -39,6 +39,9 @@
 (defconst numbers-random-math-api-url "http://numbersapi.com/random/math"
   "URL for getting maths information about a random number.")
 
+(defconst numbers-random-trivia-api-url "http://numbersapi.com/random/trivia"
+  "URL for getting trivia about a random number.")
+
 (defconst numbers-user-agent "numbers.el"
   "User agent to send when requesting number information.")
 
@@ -64,6 +67,10 @@
 (defun numbers-get-trivia (number)
   "Get some trivia about NUMBER."
   (numbers-get numbers-trivia-api-url number))
+
+(defun numbers-get-trivia-random ()
+  "Get trivia about a random number."
+  (numbers-get numbers-random-trivia-api-url))
 
 (defun numbers-reader ()
   "Get a number finding arguments from the user.
@@ -127,6 +134,19 @@ if INSERT is non-nil."
     (if insert
         (insert math)
       (message "%s" math))))
+
+;;;###autoload
+(defun numbers-random-trivia (&optional insert)
+  "Display or insert some trivia about a random number.
+
+The trivia is displayed in the message area, or inserted at
+`point' if INSERT is non-nil."
+  (interactive "P")
+  (let ((trivia (or (numbers-get-math-random)
+                    "Unable to get some random number trivia")))
+    (if insert
+        (insert trivia)
+      (message "%s" trivia))))
 
 (provide 'numbers)
 
