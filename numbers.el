@@ -36,13 +36,16 @@
 (defconst numbers-trivia-api-url "http://numbersapi.com/%d"
   "URL for getting trivia about a number.")
 
+(defconst numbers-random-math-api-url "http://numbersapi.com/random/math"
+  "URL for getting maths information about a random number.")
+
 (defconst numbers-user-agent "numbers.el"
   "User agent to send when requesting number information.")
 
-(defun numbers-get (url number)
-  "Visit URL getting information about NUMBER."
+(defun numbers-get (url &optional number)
+  "Visit URL getting information, optionally about NUMBER."
   (let* ((url-request-extra-headers `(("User-Agent" . ,numbers-user-agent)))
-         (buffer (url-retrieve-synchronously (format url number) t t)))
+         (buffer (url-retrieve-synchronously (if number (format url number) url) t t)))
     (when buffer
       (with-current-buffer buffer
         (set-buffer-multibyte t)
@@ -53,6 +56,10 @@
 (defun numbers-get-math (number)
   "Get some maths information about NUMBER."
   (numbers-get numbers-math-api-url number))
+
+(defun numbers-get-math-random ()
+  "Get some maths information about a random number."
+  (numbers-get numbers-random-math-api-url))
 
 (defun numbers-get-trivia (number)
   "Get some trivia about NUMBER."
@@ -107,6 +114,19 @@ If INSERT is non-nil `insert' the information rather than display
 it."
   (interactive (numbers-reader))
   (numbers-reveal #'numbers-get-trivia number insert))
+
+;;;###autoload
+(defun numbers-random-math (&optional insert)
+  "Display or insert a maths fact about a random number.
+
+The fact is displayed in the message area, or inserted at `point'
+if INSERT is non-nil."
+  (interactive "P")
+  (let ((math (or (numbers-get-math-random)
+                  "Unable to get a random math fact")))
+    (if insert
+        (insert math)
+      (message "%s" math))))
 
 (provide 'numbers)
 
