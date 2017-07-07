@@ -37,6 +37,7 @@
 
 ;;; Code:
 
+(require 'url-vars)
 (require 'thingatpt)
 
 (defconst numbers-math-api-url "http://numbersapi.com/%d/math"
