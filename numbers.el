@@ -6,6 +6,10 @@
 ;; Keywords: games, trivia, maths, numbers
 ;; URL: https://github.com/davep/numbers.el
 
+;; numbers.el is free software distributed under the terms of the GNU
+;; General Public Licence, version 2 or (at your option) any later version.
+;; For details see the file COPYING.
+
 ;;; Commentary:
 ;;
 ;; numbers.el is a little wrapper around http://numbersapi.com/ that can be
