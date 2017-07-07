@@ -152,7 +152,7 @@ if INSERT is non-nil."
 The trivia is displayed in the message area, or inserted at
 `point' if INSERT is non-nil."
   (interactive "P")
-  (let ((trivia (or (numbers-get-math-random)
+  (let ((trivia (or (numbers-get-trivia-random)
                     "Unable to get some random number trivia")))
     (if insert
         (insert trivia)
