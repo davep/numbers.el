@@ -30,6 +30,7 @@
          (buffer (url-retrieve-synchronously (format url number) t t)))
     (when buffer
       (with-current-buffer buffer
+        (set-buffer-multibyte t)
         (setf (point) (point-min))
         (when (search-forward-regexp "^$" nil t)
           (buffer-substring (1+ (point)) (point-max)))))))
