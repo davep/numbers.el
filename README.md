@@ -1,3 +1,6 @@
+[![MELPA Stable](https://stable.melpa.org/packages/numbers-badge.svg)](https://stable.melpa.org/#/numbers)
+[![MELPA](https://melpa.org/packages/numbers-badge.svg)](https://melpa.org/#/numbers)
+
 # numbers.el
 
 Display information and trivia about numbers
