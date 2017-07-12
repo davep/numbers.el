@@ -175,6 +175,15 @@ The trivia is displayed in the message area, or inserted at
   (interactive "P")
   (numbers-reveal-random #'numbers-get-trivia-random "some random number trivia" insert))
 
+;;;###autoload
+(defun numbers-random (&optional insert)
+  "Display a maths fact or some trivia about a random number.
+
+When called this command randomly calls `numbers-random-math' or
+`numbers-random-trivia'."
+  (interactive "P")
+  (funcall (if (zerop (random 2)) #'numbers-random-math #'numbers-random-trivia) insert))
+
 (provide 'numbers)
 
 ;;; numbers.el ends here
